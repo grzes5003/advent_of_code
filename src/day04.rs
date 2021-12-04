@@ -57,11 +57,37 @@ fn task01(input: Vec<String>) -> u16 {
             res = winner.clone().values
                 .into_iter()
                 .filter(|item| !start[..idx].contains(item))
-                .sum::<u16>() * start.get(idx-1)
+                .sum::<u16>() * start.get(idx - 1)
                 .unwrap();
             break;
         }
     }
+    res
+}
+
+
+fn task02(input: Vec<String>) -> u16 {
+    let (mut start, boards) = parse_game_input(input);
+    let mut res = 0;
+    let mut last = Board {values: vec![]};
+
+    for idx in SIZE..start.len() {
+        let loosers = boards.clone()
+            .into_iter()
+            .filter(|board| !check(&board.values, &start[..idx]) && !check(&transpose(&board.values), &start[..idx]))
+            .collect::<Vec<Board>>();
+        if loosers.is_empty() {
+            return last.clone().values
+                .into_iter()
+                .filter(|item| !start[..idx].contains(item))
+                .sum::<u16>() * start.get(idx - 1)
+                .unwrap()
+        }
+        match loosers.last() {
+            Some(looser) => last = looser.to_owned(),
+            None => ()
+        }
+    };
     res
 }
 
@@ -88,5 +114,12 @@ mod tests {
         let vec = input_data();
         let result = task01(vec);
         println!("task01: {}", result)
+    }
+
+    #[test]
+    fn task02_test() {
+        let vec = input_data();
+        let result = task02(vec);
+        println!("task02: {}", result)
     }
 }
