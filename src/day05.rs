@@ -1,5 +1,6 @@
 use std::borrow::Borrow;
 use std::collections::HashMap;
+use std::convert::TryInto;
 use std::ops::{Range, RangeInclusive};
 
 #[derive(Debug)]
@@ -30,6 +31,10 @@ impl Vector {
         &self.x1 == &self.x2 || &self.y1 == &self.y2
     }
 
+    fn is_diag(&self) -> bool {
+        (self.x2 as i32 - self.x1 as i32).abs() == (self.y2 as i32 - self.y1 as i32).abs()
+    }
+
     fn get_line(&self) -> Vec<Point> {
         match (&self.x1 == &self.x2, &self.y1 == &self.y2) {
             (true, _) => ord_range(self.y1, self.y2).map(|val| Point {
@@ -40,15 +45,18 @@ impl Vector {
                 x: val,
                 y: self.y1,
             }).collect(),
-            _ => panic!("")
+            _ => ord_range(self.x1, self.x2)
+                .zip(ord_range(self.y1, self.y2))
+                .map(|(x,y)| Point { x,y })
+                .collect()
         }
     }
 }
 
-fn ord_range(val1: u32, val2: u32) -> RangeInclusive<u32> {
+fn ord_range(val1: u32, val2: u32) -> Box<dyn Iterator<Item = u32>> {
     match val1 < val2 {
-        true => val1..=val2,
-        false => val2..=val1,
+        true => Box::new(val1..=val2),
+        false => Box::new((val2..=val1).rev()),
     }
 }
 
@@ -64,13 +72,13 @@ fn parse_vec(input: Vec<String>) -> Vec<Vector> {
         .collect::<Vec<Vector>>()
 }
 
-fn task01(input: Vec<Vector>) -> u32 {
+fn solution(input: Vec<Vector>) -> u32 {
     let mut h_points: HashMap<Point, bool> = HashMap::new();
-    let _input: Vec<Vector> = input.into_iter().filter(|vec| vec.vert_or_hor()).collect();
-    _input.into_iter()
+    input.into_iter()
         .map(|vec| vec.get_line())
-        .flat_map(|val| val)
+        .flat_map(|val| {println!("-----");val})
         .for_each(|point| {
+            println!("{:?}", point);
             match h_points.contains_key(&point) {
                 true => *h_points.get_mut(&point).unwrap() = true,
                 false => { h_points.insert(point, false); }
@@ -80,6 +88,20 @@ fn task01(input: Vec<Vector>) -> u32 {
         .fold(0, |accum, entry| if *entry.1 { accum + 1 } else { accum })
 }
 
+fn task01(input: Vec<Vector>) -> u32 {
+    let _input: Vec<Vector> = input.into_iter()
+        .filter(|vec| vec.vert_or_hor())
+        .collect();
+    solution(_input)
+}
+
+fn task02(input: Vec<Vector>) -> u32 {
+    let _input: Vec<Vector> = input.into_iter()
+        .filter(|vec| vec.is_diag())
+        .collect();
+    // println!("{:#?}", _input);
+    solution(_input)
+}
 
 #[cfg(test)]
 mod tests {
@@ -87,7 +109,7 @@ mod tests {
     use crate::parser::parse;
 
     fn input_data() -> Vec<String> {
-        parse("resources/day05.in")
+        parse("resources/day05_2.in")
     }
 
     #[test]
@@ -101,5 +123,12 @@ mod tests {
         let vec = parse_vec(input_data());
         let result = task01(vec);
         println!("task01: {}", result)
+    }
+
+    #[test]
+    fn task02_test() {
+        let vec = parse_vec(input_data());
+        let result = task02(vec);
+        println!("task02: {}", result)
     }
 }
