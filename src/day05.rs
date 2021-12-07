@@ -47,13 +47,13 @@ impl Vector {
             }).collect(),
             _ => ord_range(self.x1, self.x2)
                 .zip(ord_range(self.y1, self.y2))
-                .map(|(x,y)| Point { x,y })
+                .map(|(x, y)| Point { x, y })
                 .collect()
         }
     }
 }
 
-fn ord_range(val1: u32, val2: u32) -> Box<dyn Iterator<Item = u32>> {
+fn ord_range(val1: u32, val2: u32) -> Box<dyn Iterator<Item=u32>> {
     match val1 < val2 {
         true => Box::new(val1..=val2),
         false => Box::new((val2..=val1).rev()),
@@ -76,9 +76,8 @@ fn solution(input: Vec<Vector>) -> u32 {
     let mut h_points: HashMap<Point, bool> = HashMap::new();
     input.into_iter()
         .map(|vec| vec.get_line())
-        .flat_map(|val| {println!("-----");val})
+        .flat_map(|val| val)
         .for_each(|point| {
-            println!("{:?}", point);
             match h_points.contains_key(&point) {
                 true => *h_points.get_mut(&point).unwrap() = true,
                 false => { h_points.insert(point, false); }
@@ -97,9 +96,8 @@ fn task01(input: Vec<Vector>) -> u32 {
 
 fn task02(input: Vec<Vector>) -> u32 {
     let _input: Vec<Vector> = input.into_iter()
-        .filter(|vec| vec.is_diag())
+        .filter(|vec| vec.is_diag() || vec.vert_or_hor())
         .collect();
-    // println!("{:#?}", _input);
     solution(_input)
 }
 
@@ -109,7 +107,7 @@ mod tests {
     use crate::parser::parse;
 
     fn input_data() -> Vec<String> {
-        parse("resources/day05_2.in")
+        parse("resources/day05.in")
     }
 
     #[test]
