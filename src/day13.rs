@@ -70,7 +70,7 @@ mod tests {
     use crate::parser::parse;
 
     fn input_data() -> Vec<Action> {
-        let parsed = parse("resources/day12.in");
+        let parsed = parse("resources/day13.in");
         parsed.into_iter().filter(|line| !line.is_empty()).map(|line| {
             if line.starts_with("fold") {
                 if let [dir, wh] = line.split("=")
