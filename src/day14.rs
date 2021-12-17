@@ -1,4 +1,4 @@
-use std::collections::{HashMap, HashSet};
+use std::collections::HashMap;
 use std::iter;
 
 fn extender(init: String, dict: HashMap<String, String>, limit: u32) -> String {
@@ -18,8 +18,8 @@ fn task01(init: String, dict: HashMap<String, String>) -> u32 {
     res.chars().for_each(
         |ch| { *occurrences.entry(ch).or_insert(0) += 1 }
     );
-    occurrences.iter().map(|(key, val)| val).max().unwrap() -
-    occurrences.iter().map(|(key, val)| val).min().unwrap()
+    occurrences.iter().map(|(_, val)| val).max().unwrap() -
+    occurrences.iter().map(|(_, val)| val).min().unwrap()
 }
 
 fn fast_extender(input: &mut HashMap<String, u64>, dict: HashMap<String, String>, limit: u32) -> &mut HashMap<String, u64> {
@@ -47,8 +47,8 @@ fn task02(init: String, dict: HashMap<String, String>) -> u64 {
     );
     *occurrences.entry(init.chars().last().unwrap()).or_default() += 1;
 
-    occurrences.iter().map(|(key,val)| val).max().unwrap() -
-    occurrences.iter().map(|(key,val)| val).min().unwrap()
+    occurrences.iter().map(|(_, val)| val).max().unwrap() -
+    occurrences.iter().map(|(_, val)| val).min().unwrap()
 }
 
 #[cfg(test)]
@@ -69,14 +69,14 @@ mod tests {
 
     #[test]
     fn task01_test() {
-        let mut vec = input_data();
+        let vec = input_data();
         let result = task01(vec.0, vec.1);
         println!("task01: {}", result)
     }
 
     #[test]
     fn task02_test() {
-        let mut vec = input_data();
+        let vec = input_data();
         let result = task02(vec.0, vec.1);
         println!("task02: {}", result)
     }

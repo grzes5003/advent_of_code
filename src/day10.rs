@@ -1,4 +1,3 @@
-use std::collections::BinaryHeap;
 
 enum Token {
     Open(char),

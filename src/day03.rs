@@ -1,5 +1,3 @@
-use std::ops::BitXor;
-use std::os::raw::c_int;
 
 fn task01(input: Vec<String>) -> u32 {
     let len = (input.len() / 2) as u32;

@@ -1,13 +1,9 @@
-use std::borrow::Borrow;
-use std::collections::HashMap;
-use std::iter::Map;
-
 
 fn task01(input: Vec<u32>) -> u32 {
 
     let mut results: Vec<u32> = vec![];
     for x in 0..*input.iter().max().unwrap() {
-        let val = results.push(input.iter()
+        results.push(input.iter()
             .map(|p| (x as i32 - *p as i32).abs() as u32)
             .sum::<u32>());
         if x >= 3 {
@@ -26,7 +22,7 @@ fn task02(input: Vec<u32>) -> u32 {
 
     let mut results: Vec<u32> = vec![];
     for x in 0..*input.iter().max().unwrap() {
-        let val = results.push(input.iter()
+        results.push(input.iter()
             .map(|p| (1..=(x as i32 - *p as i32).abs() as u32).sum::<u32>())
             .sum::<u32>());
         if x >= 3 {

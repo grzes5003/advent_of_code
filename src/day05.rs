@@ -1,7 +1,4 @@
-use std::borrow::Borrow;
 use std::collections::HashMap;
-use std::convert::TryInto;
-use std::ops::{Range, RangeInclusive};
 
 #[derive(Debug)]
 struct Vector {

@@ -1,6 +1,3 @@
-use std::borrow::Borrow;
-use std::convert::TryInto;
-use std::env::var;
 
 const SIZE: usize = 5;
 
@@ -46,7 +43,7 @@ fn parse_game_input(input: Vec<String>) -> (Vec<u16>, Vec<Board>) {
 }
 
 fn task01(input: Vec<String>) -> u16 {
-    let (mut start, boards) = parse_game_input(input);
+    let (start, boards) = parse_game_input(input);
     let mut res = 0;
     for idx in SIZE..start.len() {
         if let Some(winner) = boards.clone()
@@ -67,8 +64,8 @@ fn task01(input: Vec<String>) -> u16 {
 
 
 fn task02(input: Vec<String>) -> u16 {
-    let (mut start, boards) = parse_game_input(input);
-    let mut res = 0;
+    let (start, boards) = parse_game_input(input);
+    let res = 0;
     let mut last = Board {values: vec![]};
 
     for idx in SIZE..start.len() {

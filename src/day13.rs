@@ -90,14 +90,14 @@ mod tests {
 
     #[test]
     fn task01_test() {
-        let mut vec = input_data();
+        let vec = input_data();
         let result = task01(vec);
         println!("task01: {}", result)
     }
 
     #[test]
     fn task02_test() {
-        let mut vec = input_data();
+        let vec = input_data();
         let result = task02(vec);
         println!("task01: \n{}", result)
     }
