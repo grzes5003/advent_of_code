@@ -12,6 +12,7 @@ mod day11;
 mod day13;
 mod day14;
 mod day16;
+mod day17;
 mod parser;
 
 #[cfg(test)]
