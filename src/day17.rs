@@ -1,4 +1,3 @@
-use std::iter::Repeat;
 
 #[derive(Debug, PartialEq)]
 enum Status {
@@ -48,7 +47,7 @@ fn task01(coords: (i32, i32, i32, i32)) -> i32 {
     };
     let limit = 150;
     let val = (0..limit)
-        .flat_map(|num| std::iter::repeat(num).zip((0..limit)));
+        .flat_map(|num| std::iter::repeat(num).zip(0..limit));
     let mut glob_max = 0;
     for xy in val {
         ocean.reset(xy);
@@ -72,7 +71,7 @@ fn task02(coords: (i32, i32, i32, i32)) -> i32 {
     };
     let limit = 1000;
     let val = (0..limit)
-        .flat_map(|num| std::iter::repeat(num).zip((-limit..limit)));
+        .flat_map(|num| std::iter::repeat(num).zip(-limit..limit));
     let mut counter = 0;
     for xy in val {
         ocean.reset(xy);

@@ -178,7 +178,7 @@ fn reader<I: Iterator<Item=u8>>(iter: &mut Peekable<I>, result: &mut Vec<Packet>
     }
 }
 
-fn task01(mut input: Vec<u8>) -> u32 {
+fn task01(input: Vec<u8>) -> u32 {
     // i in 0..4 of 1 << i
     let mut res = Vec::new();
     reader(&mut input.into_iter().peekable(), &mut res);
@@ -186,7 +186,7 @@ fn task01(mut input: Vec<u8>) -> u32 {
     res.into_iter().map(|pckt| pckt.header.version as u32).sum()
 }
 
-fn task02(mut input: Vec<u8>) -> u32 {
+fn task02(input: Vec<u8>) -> u32 {
     let mut res = Vec::new();
     reader(&mut input.into_iter().peekable(), &mut res);
     println!("=== {:?}", res);
