@@ -1,3 +1,5 @@
+use std::collections::HashSet;
+
 const BOARD_LEN: u8 = 10;
 
 #[derive(Debug)]
@@ -34,6 +36,39 @@ fn task01(positions: (u8, u8)) -> u64 {
     panic!()
 }
 
+fn rec(boards: &mut Vec<(Player, Player)>, score: (u64,u64), perm: &Vec<i32>) -> u64 {
+    let _boards: Vec<(Player,Player)> = Vec::new();
+    boards.into_iter()
+        .map(|(p1, p2)| {
+            perm.iter().map(|dice| {
+                // Player {
+                //     position: p1.position + ,
+                //     score: 0
+                // }
+                // _boards.push({})
+            })
+        });
+    1
+}
+
+fn perm() -> Vec<(i32,i32)> {
+    const LIMIT: i32 = 3;
+    let stuff = (1..=LIMIT)
+        .flat_map(|num| std::iter::repeat(num).zip(0..LIMIT))
+        .flat_map(|num| std::iter::repeat(num).zip(0..LIMIT))
+        .map(|item| item.0.0 + item.0.1 + item.1)
+        // .collect::<HashSet<i32>>()
+        // .into_iter()
+        .collect::<Vec<i32>>();
+    stuff.iter()
+        .flat_map(|num| std::iter::repeat(*num).zip(stuff.clone()))
+        .collect()
+}
+
+fn task02(positions: (u8, u8), ) -> u64 {
+    let perm = perm();
+    unimplemented!()
+}
 
 #[cfg(test)]
 mod tests {
@@ -52,6 +87,7 @@ mod tests {
     fn task01_test() {
         let vec = input_data();
         let result = task01(vec);
+        println!("perm {:?}", perm());
         println!("task01: {:?}", result)
     }
 }
